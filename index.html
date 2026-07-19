@@ -10,7 +10,7 @@
   --bg:#ffffff; --surface:#ffffff; --surface-2:#f7f7f5; --text:#191919; --muted:#6a6a6a;
   --border:rgba(0,0,0,.09); --border-2:rgba(0,0,0,.14);
   --accent:#7F77DD; --accent-2:#635ac2; --accent-weak:rgba(127,119,221,.12);
-  --success:#2f9e6b;
+  --success:#2f9e6b; --warn:#b26b00;
   --mono:"SF Mono","SFMono-Regular",ui-monospace,Menlo,Monaco,"Cascadia Mono","Roboto Mono",monospace;
   --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
 }
@@ -18,7 +18,7 @@
   --bg:#0e0e11; --surface:#17171c; --surface-2:#1f1f26; --text:#ececed; --muted:#9a9aa4;
   --border:rgba(255,255,255,.10); --border-2:rgba(255,255,255,.18);
   --accent:#8f87e6; --accent-2:#a99fff; --accent-weak:rgba(143,135,230,.16);
-  --success:#54c495;
+  --success:#54c495; --warn:#e0a13a;
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -72,6 +72,47 @@ h2{font-size:18px;margin:0 0 4px}
 .chart-head .t b{color:var(--muted);font-weight:400;opacity:.7}
 #cont{position:relative}
 #readout{position:absolute;top:34px;left:50%;transform:translateX(-100%);font-size:13px;font-weight:600;font-family:var(--mono);color:var(--accent);pointer-events:none;white-space:nowrap;line-height:1}
+.chart-note{font-size:11px;color:var(--muted);margin-top:9px;line-height:1.45}
+.chart-note b{color:var(--text);font-weight:600}
+.rolebtns{display:flex;gap:5px;flex-wrap:wrap}
+.rolebtns button{font:inherit;font-size:11px;padding:5px 9px;border-radius:6px;border:1px solid var(--border-2);background:transparent;color:var(--muted);cursor:pointer;transition:.2s}
+.rolebtns button.active{background:var(--accent);border-color:var(--accent);color:#fff}
+#ylabels text{font-size:9px;fill:var(--muted);font-family:var(--mono)}
+.chart-how{margin-top:12px;border-top:1px solid var(--border);padding-top:10px}
+.how-h{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:6px}
+.how-hint{font-size:10px;letter-spacing:0;text-transform:none;color:var(--muted);font-weight:400}
+.chart-ctx{font-size:10.5px;color:var(--muted);margin-top:10px;padding-top:8px;border-top:1px solid var(--border);line-height:1.5}
+.chart-stats{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.chart-stats span{font-size:10.5px;padding:4px 9px;border-radius:6px;background:var(--surface-2);border:1px solid var(--border);color:var(--text)}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+@media (max-width:520px){
+  #bench,#revpts,#rlabels{display:none}
+  .legend .lg:nth-child(2){display:none}
+  .rolebtns button{font-size:10px;padding:4px 7px}
+  .chart-head{gap:8px}
+}
+.how-item{font-size:12px;color:var(--text);display:flex;gap:8px;line-height:1.5;margin-bottom:5px;cursor:default;transition:color .15s}
+.how-item .hn{display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:4px;background:var(--accent-weak);color:var(--accent);font-size:10px;font-weight:600;flex:none;transition:.15s}
+.how-item.hi{color:var(--accent)}
+.how-item.hi .hn{background:var(--accent);color:#fff}
+#markers .mk{cursor:pointer}
+#markers .mk circle{fill:var(--accent);stroke:var(--surface);stroke-width:2;transition:r .15s}
+#markers .mk text{fill:#fff;font-size:9px;font-weight:600;font-family:var(--mono);pointer-events:none}
+#bench{stroke:var(--muted);stroke-width:1.4;stroke-dasharray:4 3;opacity:.5}
+#vdots circle{fill:var(--accent);stroke:var(--surface);stroke-width:1}
+#revpts circle{fill:var(--muted)}
+#revpts text{fill:var(--muted);font-size:8.5px;font-family:var(--mono)}
+#rlabels text{fill:var(--muted);font-size:8.5px;font-family:var(--mono)}
+#revpts circle.ph{fill:none;stroke:var(--warn);stroke-width:1.2}
+#revpts text.ph{fill:var(--warn)}
+.ph-note{font-size:10px;color:var(--warn);margin-top:5px}
+#events .evline{stroke:var(--warn);stroke-width:1;stroke-dasharray:3 3;opacity:.55}
+#events .evlabel{fill:var(--warn);font-size:8px;font-family:var(--mono)}
+.xspan{display:flex;justify-content:space-between;font-size:9.5px;color:var(--muted);margin-top:3px;padding:0 2px}
+.legend{display:flex;gap:16px;margin-top:8px;font-size:10.5px;color:var(--muted)}
+.legend .lg{display:inline-flex;align-items:center;gap:6px}
+.legend .sw{width:14px;height:0;border-top:2px solid var(--accent)}
+.legend .sw-b{border-top:2px dashed var(--muted)}
 
 /* metrics */
 .metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:10px}
@@ -170,12 +211,17 @@ h2{font-size:18px;margin:0 0 4px}
 
     <div class="chartcard reveal">
       <div class="chart-head">
-        <div class="t">Pipeline index <b>· hover or drag to scrub</b></div>
-        <button class="btn" id="toggle" style="padding:8px 14px">Apply my optimizations</button>
+        <div class="t" id="chartTitle">Lead conversion index <b>· hover to scrub</b></div>
+        <div class="rolebtns" id="roleBtns">
+          <button data-role="doordash">DoorDash</button>
+          <button class="active" data-role="fieldnation">Field Nation</button>
+          <button data-role="pitchbook">PitchBook</button>
+        </div>
       </div>
+      <p class="sr-only" id="chartSr" aria-live="polite"></p>
       <div id="cont">
-        <div id="readout">305.00</div>
-        <svg id="chart" viewBox="0 0 680 208" width="100%" style="display:block;touch-action:none">
+        <div id="readout">100.00</div>
+        <svg id="chart" viewBox="0 0 680 264" width="100%" role="img" style="display:block;touch-action:none">
           <defs>
             <linearGradient id="pf" x1="0" y1="0" x2="0" y2="1">
               <stop offset="0" stop-color="#7F77DD" stop-opacity=".42"/>
@@ -187,13 +233,30 @@ h2{font-size:18px;margin:0 0 4px}
             </filter>
           </defs>
           <g id="grid" stroke="var(--border)" stroke-width="1"></g>
+          <g id="ylabels"></g>
+          <g id="rlabels"></g>
+          <g id="events"></g>
           <path id="ghost" fill="none" stroke="var(--muted)" stroke-width="1.1" stroke-dasharray="2 4" opacity="0"/>
           <path id="area" fill="url(#pf)" opacity="0"/>
+          <path id="bench" fill="none"/>
           <path id="line" fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/>
-          <line id="cross" y1="35" y2="208" stroke="var(--accent)" stroke-width="1" opacity="0"/>
+          <g id="vdots"></g>
+          <g id="revpts"></g>
+          <g id="markers"></g>
+          <line id="cross" y1="44" y2="264" stroke="var(--accent)" stroke-width="1" opacity="0"/>
           <circle id="dot" r="6.5" fill="var(--surface)" stroke="var(--accent)" stroke-width="3" opacity="0" filter="url(#dsh)"/>
         </svg>
       </div>
+      <div class="xspan" id="xspan"></div>
+      <div class="legend" id="legend"></div>
+      <div class="ph-note" id="phNote"></div>
+      <div class="chart-note" id="chartNote">Indexed to 100. The <b>+22% lift</b> is a real result — lead conversion, Field Nation (2024). Month-to-month shape is illustrative.</div>
+      <div class="chart-how">
+        <div class="how-h">How I drove it <span class="how-hint">— numbered points mark where each shipped; hover to trace</span></div>
+        <div id="chartHow"></div>
+      </div>
+      <div class="chart-ctx" id="chartCtx"></div>
+      <div class="chart-stats" id="chartStats"></div>
     </div>
   </div>
 </header>
@@ -415,21 +478,39 @@ h2{font-size:18px;margin:0 0 4px}
     });
   });
 
-  /* ===== hero ticker chart ===== */
-  var W=680,H=208,padX=4,botP=10,n=120,rows=6,rowH=H/rows,usableTop=rowH+6,usableBot=H-botP;
-  var rA=mb(11),rB=mb(29),before=[],after=[],p=302,q=300;
-  for(var i=0;i<n;i++){ p+=-0.002+(rA()-0.5)*1.7; if(p<296)p=296; if(p>308)p=308; before.push(p); }
-  for(var k=0;k<n;k++){ var f=k/n,d=f<0.5?0.05:(f<0.57?1.2:0.26); q+=d+(rB()-0.5)*2.2; after.push(q); }
-  var all=before.concat(after),lo=Math.min.apply(null,all)-3,hi=Math.max.apply(null,all)+3;
-  function X(i){return padX+(W-2*padX)*(i/(n-1));}
+  /* ===== hero role-adaptive chart ===== */
+  var W=680,H=264,padL=32,padR=42,botP=12,n=240,rows=6,rowH=H/rows,usableTop=rowH+6,usableBot=H-botP;
+  var EV=[{f:0.20},{f:0.46},{f:0.70}];
+  var REC=[{f:0,p:0},{f:.09,p:-.13},{f:.20,p:-.19},{f:.30,p:-.05},{f:.40,p:.12},{f:.46,p:.24},{f:.56,p:.34},{f:.64,p:.44},{f:.70,p:.58},{f:.82,p:.74},{f:.90,p:.9},{f:1,p:1}];
+  var CUM=[{f:0,p:0},{f:.12,p:.03},{f:.20,p:.06},{f:.30,p:.10},{f:.40,p:.20},{f:.46,p:.29},{f:.56,p:.40},{f:.64,p:.50},{f:.70,p:.60},{f:.82,p:.78},{f:.92,p:.92},{f:1,p:1}];
+  var BFLAT=[{f:0,p:0},{f:.18,p:-.28},{f:.45,p:0},{f:.7,p:.4},{f:1,p:1}];
+  var DDCUM=[{f:0,p:0},{f:.1,p:.08},{f:.2,p:.17},{f:.3,p:.27},{f:.4,p:.38},{f:.5,p:.49},{f:.6,p:.6},{f:.7,p:.7},{f:.8,p:.8},{f:.9,p:.9},{f:1,p:1}];
+  function interp(a,f){for(var i=0;i<a.length-1;i++){if(f<=a[i+1].f){var t=(f-a[i].f)/((a[i+1].f-a[i].f)||1);return a[i].p+(a[i+1].p-a[i].p)*t;}}return a[a.length-1].p;}
+  function buildLine(seed,start,end,anchors,noiseAmp,mono){
+    var r=mb(seed),total=end-start,out=[],last=-1e18;
+    for(var i=0;i<n;i++){
+      var f=i/n,v=start+total*interp(anchors,f)+(r()-0.5)*noiseAmp;
+      if(mono&&v<last)v=last+r()*noiseAmp*0.15;
+      out.push(v);last=v;
+    }
+    out[n-1]=end;return out;
+  }
+  var roles={
+    doordash:{title:'Spend efficiency ($)',note:'<b>$2M+ spend efficiency</b> driven across a $2M+ campaign portfolio — DoorDash (2025–26). Curve illustrative; the total is real.',data:buildLine(41,40000,2000000,DDCUM,0,true),anchors:DDCUM,loB:0,hiB:2150000,ticks:[{v:0,l:'$0'},{v:1e6,l:'$1M'},{v:2e6,l:'$2M'}],fmt:function(v){return v>=1e6?'$'+(v/1e6).toFixed(2)+'M':'$'+Math.round(v/1e3)+'K';},how:['Built an agentic Snowflake monitoring system that auto-flags delivery errors','Optimized pacing, bids, and signals to prevent underspend at scale','Owned delivery health across a $2M+ ENT / CPG / NV portfolio'],primaryLabel:'My spend efficiency',revPts:[{f:.04,rv:1.3,l:'$1.3B',ph:1},{f:.35,rv:1.5,l:'$1.5B',ph:1},{f:.66,rv:1.7,l:'$1.7B',ph:1},{f:.95,rv:1.9,l:'$1.9B',ph:1}],revAxis:{min:1.1,max:2.0,ticks:[{v:1.5,l:'$1.5B'},{v:1.9,l:'$1.9B'}]},span:['Aug 2025','May 2026'],revLabel:'DoorDash ad revenue (est.)',ctx:'DoorDash Ads — crossed a $1B+ annualized run rate in 2024 (DoorDash + Wolt); projected ~$2.6B by 2027. (DoorDash, Monexa)',stats:['Ads run-rate $1B+ (2024)','FY25 revenue $13.7B','My portfolio $2M+','$1M+ monitored','ENT · CPG · NV'],events:[{f:.5,l:'add a product milestone',ph:1}]},
+    fieldnation:{title:'Lead conversion index',note:'The <b>+22% lift</b> is a real result — lead conversion, Field Nation (2024). Indexed to 100; shape illustrative.',data:buildLine(11,100,122,REC,0,false),anchors:REC,loB:93,hiB:126,ticks:[{v:100,l:'100'},{v:110,l:'110'},{v:120,l:'120'}],fmt:function(v){return v.toFixed(2);},how:['Overhauled Salesforce + HubSpot with custom automations','Standardized data across CRM + marketing systems for clean lead flow','Automated ZoomInfo enrichment into Outreach + Salesforce'],primaryLabel:'My lead conversion',revPts:[{f:.08,rv:0.96,l:'0.96M',ph:1},{f:.4,rv:1.0,l:'1.0M',ph:1},{f:.68,rv:1.04,l:'1.04M',ph:1},{f:.92,rv:1.08,l:'1.08M',ph:1}],revAxis:{min:0.9,max:1.12,ticks:[{v:1.0,l:'1.0M'}]},span:['Dec 2023','Jul 2024'],revLabel:'Field Nation work orders/yr (est.)',ctx:'Field Nation — 1M+ work orders/year, ~20K/week at 98% success across 600K+ sites. (Field Nation)',stats:['1M+ jobs/yr','~20K/week','$258M revenue (2024)','~$30M raised','~2,300 employees'],events:[{f:.5,l:'add a product milestone',ph:1}]},
+    pitchbook:{title:'Operational efficiency index',note:'The <b>+20% gain</b> is a real result — operational efficiency via automation, PitchBook (2021–23). Indexed to 100; shape illustrative.',data:buildLine(29,100,120,REC,0,false),anchors:REC,loB:93,hiB:124,ticks:[{v:100,l:'100'},{v:110,l:'110'},{v:120,l:'120'}],fmt:function(v){return v.toFixed(2);},how:['Built automations in Python, Marketo, and Salesforce','Redesigned the lifecycle funnel — lead scoring, tracking, nurture','Cleaned & deduped a 4M+ record Marketo database'],primaryLabel:'My ops efficiency',revPts:[{f:.06,rv:55,l:'55K',ph:1},{f:.5,rv:80,l:'80K',ph:1},{f:.94,rv:105,l:'105K',ph:1}],revAxis:{min:40,max:130,ticks:[{v:60,l:'60K'},{v:100,l:'100K'}]},span:['Aug 2021','Aug 2023'],revLabel:'PitchBook licensed users (est.)',ctx:'PitchBook — 125K+ licensed users by 2024, up from 1,800+ clients at the 2016 acquisition. (Morningstar)',stats:['125K+ users (2024)','$552M revenue (2023)','Acquired $225M (2016)','Founded 2007'],events:[{f:.5,l:'add a product milestone',ph:1}]}
+  };
+  function X(i){return padL+(W-padL-padR)*(i/(n-1));}
   function Y(v){return usableTop+(usableBot-usableTop)*(1-(v-lo)/(hi-lo));}
   function pathOf(a){var s='';for(var i=0;i<a.length;i++)s+=(i?'L':'M')+X(i).toFixed(1)+' '+Y(a[i]).toFixed(1)+' ';return s;}
   function areaOf(a){return pathOf(a)+'L'+X(n-1).toFixed(1)+' '+(H-2)+' L'+X(0).toFixed(1)+' '+(H-2)+' Z';}
   var grid=document.getElementById('grid');
-  for(var gx=1;gx<7;gx++){var x=padX+(W-2*padX)*gx/7;grid.insertAdjacentHTML('beforeend','<line x1="'+x+'" y1="'+rowH+'" x2="'+x+'" y2="'+H+'"/>');}
-  for(var gy=1;gy<=rows;gy++){var yy=Math.min(H-0.5,rowH*gy);grid.insertAdjacentHTML('beforeend','<line x1="0" y1="'+yy+'" x2="'+W+'" y2="'+yy+'"/>');}
-  var lineEl=document.getElementById('line'),areaEl=document.getElementById('area'),ghostEl=document.getElementById('ghost'),cross=document.getElementById('cross'),dot=document.getElementById('dot'),readout=document.getElementById('readout'),svg=document.getElementById('chart'),btn=document.getElementById('toggle');
-  var on=false,cur=before,idx=Math.round(n*0.55);
+  for(var gx=1;gx<7;gx++){var x=padL+(W-padL-padR)*gx/7;grid.insertAdjacentHTML('beforeend','<line x1="'+x+'" y1="'+rowH+'" x2="'+x+'" y2="'+H+'"/>');}
+  for(var gy=1;gy<=rows;gy++){var yy=Math.min(H-0.5,rowH*gy);grid.insertAdjacentHTML('beforeend','<line x1="'+padL+'" y1="'+yy+'" x2="'+(W-padR)+'" y2="'+yy+'"/>');}
+  var lineEl=document.getElementById('line'),areaEl=document.getElementById('area'),cross=document.getElementById('cross'),dot=document.getElementById('dot'),readout=document.getElementById('readout'),svg=document.getElementById('chart'),roleBtns=document.getElementById('roleBtns'),titleEl=document.getElementById('chartTitle'),noteEl=document.getElementById('chartNote'),ylabels=document.getElementById('ylabels'),howEl=document.getElementById('chartHow'),markersEl=document.getElementById('markers'),vdotsEl=document.getElementById('vdots'),statsEl=document.getElementById('chartStats'),srEl=document.getElementById('chartSr'),benchEl=document.getElementById('bench'),legendEl=document.getElementById('legend'),ctxEl=document.getElementById('chartCtx'),revptsEl=document.getElementById('revpts'),rlabelsEl=document.getElementById('rlabels'),xspanEl=document.getElementById('xspan'),phNoteEl=document.getElementById('phNote'),eventsEl=document.getElementById('events');
+  var markerGroups=[],howItems=[];
+  function highlight(k,on){ if(markerGroups[k]){markerGroups[k].classList.toggle('hi',on);var c=markerGroups[k].querySelector('circle');if(c)c.setAttribute('r',on?'10':'7');} if(howItems[k])howItems[k].classList.toggle('hi',on); }
+  var cur=[],curFmt=function(v){return v;},idx=n-1,lo=0,hi=1;
   function drawLine(a){
     lineEl.setAttribute('d',pathOf(a));areaEl.setAttribute('d',areaOf(a));
     var len=lineEl.getTotalLength();
@@ -444,23 +525,48 @@ h2{font-size:18px;margin:0 0 4px}
     var xv=X(idx),yv=Y(cur[idx]);
     cross.setAttribute('x1',xv);cross.setAttribute('x2',xv);cross.style.opacity='0.8';
     dot.setAttribute('cx',xv);dot.setAttribute('cy',yv);dot.style.opacity='1';
-    readout.textContent=cur[idx].toFixed(2);
+    readout.textContent=curFmt(cur[idx]);
     var rect=svg.getBoundingClientRect(),px=(xv/W)*rect.width,topLineY=(rowH/H)*rect.height;
     readout.style.top=(topLineY-17)+'px';
     var estW=readout.offsetWidth||46;
     if(px-estW-8<4){readout.style.transform='translateX(8px)';readout.style.left=px+'px';}
     else{readout.style.transform='translateX(-100%)';readout.style.left=(px-8)+'px';}
   }
-  function fromEvent(e){var rect=svg.getBoundingClientRect();place(Math.round(((e.clientX-rect.left)/rect.width)*(n-1)));}
+  function setRole(key){
+    var R=roles[key]; cur=R.data; curFmt=R.fmt; lo=R.loB; hi=R.hiB;
+    titleEl.innerHTML=R.title+' <b>· hover to scrub</b>';
+    noteEl.innerHTML=R.note;
+    var rp=R.revPts,ax=R.revAxis,bTop=usableTop+2,bBot=usableBot-2;
+    function Yb(v){return bBot+(bTop-bBot)*((v-ax.min)/((ax.max-ax.min)||1));}
+    function interpV(a,f){for(var i=0;i<a.length-1;i++){if(f<=a[i+1].f){var t=(f-a[i].f)/((a[i+1].f-a[i].f)||1);return a[i].rv+(a[i+1].rv-a[i].rv)*t;}}return a[a.length-1].rv;}
+    var bpath='';for(var bi=0;bi<n;bi++){var bf=bi/n;bpath+=(bi?'L':'M')+X(bi).toFixed(1)+' '+Yb(interpV(rp,bf)).toFixed(1)+' ';}
+    benchEl.setAttribute('d',bpath);
+    revptsEl.innerHTML=rp.map(function(pt){var cx=padL+(W-padL-padR)*pt.f,cy=Yb(pt.rv),anc=pt.f<0.12?'start':(pt.f>0.88?'end':'middle'),tx=pt.f<0.12?cx+5:(pt.f>0.88?cx-5:cx),c=pt.ph?' class="ph"':'';return '<circle'+c+' cx="'+cx.toFixed(1)+'" cy="'+cy.toFixed(1)+'" r="2.6"/><text'+c+' x="'+tx.toFixed(1)+'" y="'+(cy-6).toFixed(1)+'" text-anchor="'+anc+'">'+(pt.ph?'≈':'')+pt.l+'</text>';}).join('');
+    phNoteEl.textContent=rp.some(function(p){return p.ph;})?'≈ placeholder — replace with a reported figure':'';
+    eventsEl.innerHTML=(R.events||[]).map(function(ev){var ex=padL+(W-padL-padR)*ev.f;return '<line class="evline" x1="'+ex.toFixed(1)+'" y1="'+rowH+'" x2="'+ex.toFixed(1)+'" y2="'+usableBot.toFixed(1)+'"/><text class="evlabel" x="'+ex.toFixed(1)+'" y="'+(rowH+9).toFixed(1)+'" text-anchor="middle">'+(ev.ph?'≈ ':'')+ev.l+'</text>';}).join('');
+    rlabelsEl.innerHTML=ax.ticks.map(function(t){return '<text x="'+(W-padR+7)+'" y="'+(Yb(t.v)+3).toFixed(1)+'" text-anchor="start">'+t.l+'</text>';}).join('');
+    xspanEl.innerHTML='<span>'+R.span[0]+'</span><span>'+R.span[1]+'</span>';
+    legendEl.innerHTML='<span class="lg"><i class="sw"></i>'+R.primaryLabel+'</span><span class="lg"><i class="sw sw-b"></i>'+R.revLabel+'</span>';
+    ctxEl.innerHTML=R.ctx;
+    statsEl.innerHTML=R.stats.map(function(s){return '<span>'+s+'</span>';}).join('');
+    var sum=R.title.replace(/ ·.*/,'')+' — my result '+curFmt(cur[n-1])+', '+R.span[0]+' to '+R.span[1]+'. '+R.revLabel.replace('·','')+' (real). '+R.stats.join('; ')+'.';
+    svg.setAttribute('aria-label',sum); srEl.textContent=sum;
+    ylabels.innerHTML=''; R.ticks.forEach(function(t){var y=Y(t.v);ylabels.insertAdjacentHTML('beforeend','<text x="'+(padL-6)+'" y="'+(y+3).toFixed(1)+'" text-anchor="end">'+t.l+'</text>');});
+    howEl.innerHTML=R.how.map(function(h,k){return '<div class="how-item" data-k="'+k+'"><span class="hn">'+(k+1)+'</span>'+h+'</div>';}).join('');
+    vdotsEl.innerHTML=(R.anchors||[]).map(function(a){var ix=Math.round(a.f*(n-1)),cx=X(ix),cy=Y(cur[ix]);return '<circle cx="'+cx.toFixed(1)+'" cy="'+cy.toFixed(1)+'" r="2.4"/>';}).join('');
+    markersEl.innerHTML=EV.map(function(e,k){var ix=Math.round(e.f*(n-1)),cx=X(ix),cy=Y(cur[ix]);return '<g class="mk" data-k="'+k+'"><circle cx="'+cx.toFixed(1)+'" cy="'+cy.toFixed(1)+'" r="7"/><text x="'+cx.toFixed(1)+'" y="'+(cy+3).toFixed(1)+'" text-anchor="middle">'+(k+1)+'</text></g>';}).join('');
+    markerGroups=[].slice.call(markersEl.querySelectorAll('.mk'));
+    howItems=[].slice.call(howEl.querySelectorAll('.how-item'));
+    markerGroups.forEach(function(g,k){g.addEventListener('mouseenter',function(){highlight(k,true);});g.addEventListener('mouseleave',function(){highlight(k,false);});});
+    howItems.forEach(function(el,k){el.addEventListener('mouseenter',function(){highlight(k,true);});el.addEventListener('mouseleave',function(){highlight(k,false);});});
+    var bs=roleBtns.querySelectorAll('button'); for(var j=0;j<bs.length;j++){bs[j].classList.toggle('active',bs[j].getAttribute('data-role')===key);}
+    drawLine(cur); place(idx);
+  }
+  function fromEvent(e){var rect=svg.getBoundingClientRect();var vx=((e.clientX-rect.left)/rect.width)*W;place(Math.round(((vx-padL)/(W-padL-padR))*(n-1)));}
   svg.addEventListener('pointermove',fromEvent);svg.addEventListener('pointerdown',fromEvent);
-  drawLine(before);place(idx);
+  roleBtns.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;idx=n-1;setRole(b.getAttribute('data-role'));});
   window.addEventListener('resize',function(){place(idx);});
-  btn.addEventListener('click',function(){
-    on=!on;cur=on?after:before;btn.textContent=on?'Reset to current':'Apply my optimizations';
-    if(on){ghostEl.setAttribute('d',pathOf(before));ghostEl.style.transition='opacity .5s';ghostEl.style.opacity='0.7';}
-    else{ghostEl.style.opacity='0';}
-    drawLine(cur);place(idx);
-  });
+  setRole('fieldnation');
 })();
 </script>
 </body>
