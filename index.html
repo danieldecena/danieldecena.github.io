@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Daniel Decena — Marketing Automation & Operations</title>
+<meta name="description" content="Daniel Decena — Marketing Automation & Operations. I turn messy, manual marketing processes into reliable, automated, revenue-driving systems.">
+<style>
+:root{
+  --bg:#ffffff; --surface:#ffffff; --surface-2:#f7f7f5; --text:#191919; --muted:#6a6a6a;
+  --border:rgba(0,0,0,.09); --border-2:rgba(0,0,0,.14);
+  --accent:#7F77DD; --accent-2:#635ac2; --accent-weak:rgba(127,119,221,.12);
+  --success:#2f9e6b;
+  --mono:"SF Mono","SFMono-Regular",ui-monospace,Menlo,Monaco,"Cascadia Mono","Roboto Mono",monospace;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
+}
+[data-theme="dark"]{
+  --bg:#0e0e11; --surface:#17171c; --surface-2:#1f1f26; --text:#ececed; --muted:#9a9aa4;
+  --border:rgba(255,255,255,.10); --border-2:rgba(255,255,255,.18);
+  --accent:#8f87e6; --accent-2:#a99fff; --accent-weak:rgba(143,135,230,.16);
+  --success:#54c495;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--mono);font-size:13px;line-height:1.5;letter-spacing:-.01em;-webkit-font-smoothing:antialiased}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:960px;margin:0 auto;padding:0 22px}
+h1,h2,h3{font-weight:600;line-height:1.1;letter-spacing:-.03em}
+h2{font-size:18px;margin:0 0 4px}
+.sec{padding:40px 0;border-top:1px solid var(--border)}
+.sec-label{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:9px}
+.sec-label::before{content:"› "}
+.mono{font-family:var(--mono)}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .7s cubic-bezier(.4,0,.2,1),transform .7s cubic-bezier(.4,0,.2,1)}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
+
+/* nav */
+.nav{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:52px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:600;font-size:14px}
+.status{display:inline-flex;align-items:center;gap:7px;font-size:11px;color:var(--muted)}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--success);box-shadow:0 0 0 0 rgba(47,158,107,.5);animation:pulse 2.4s infinite}
+[data-theme="dark"] .dot{box-shadow:0 0 0 0 rgba(84,196,149,.5)}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(47,158,107,.45)}70%{box-shadow:0 0 0 7px rgba(47,158,107,0)}100%{box-shadow:0 0 0 0 rgba(47,158,107,0)}}
+@media (prefers-reduced-motion:reduce){.dot{animation:none}}
+.navlinks{display:flex;align-items:center;gap:22px}
+.navlinks a{font-size:13px;color:var(--muted);transition:color .2s}
+.navlinks a:hover{color:var(--text)}
+.iconbtn{background:none;border:1px solid var(--border-2);border-radius:7px;width:32px;height:32px;cursor:pointer;color:var(--text);font-size:14px;display:inline-flex;align-items:center;justify-content:center}
+.navlinks .resume{border:1px solid var(--accent);color:var(--accent);padding:6px 12px;border-radius:7px;font-weight:500;font-size:13px}
+.navlinks .resume:hover{background:var(--accent-weak)}
+@media(max-width:720px){.navlinks a:not(.resume){display:none}}
+
+/* hero */
+.hero{padding:30px 0 16px}
+.icebreak{font-family:var(--mono);font-size:11px;color:var(--accent);margin-bottom:10px;letter-spacing:0}
+.hero h1{font-size:clamp(22px,3.8vw,36px);margin:0 0 10px;text-transform:uppercase;letter-spacing:-.02em}
+.hero .lede{font-size:clamp(13px,1.6vw,15px);color:var(--muted);max-width:540px;margin:0 0 16px;letter-spacing:0;line-height:1.5}
+.cta{display:flex;flex-wrap:wrap;gap:9px;align-items:center}
+.btn{display:inline-flex;align-items:center;gap:7px;padding:8px 13px;border-radius:7px;font-weight:500;font-size:12px;cursor:pointer;border:1px solid var(--border-2);background:var(--surface);color:var(--text);transition:.2s;font-family:var(--mono)}
+.btn:hover{border-color:var(--accent);color:var(--accent)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.primary:hover{background:var(--accent-2);color:#fff}
+.loc{font-size:13px;color:var(--muted);margin-left:2px}
+
+/* chart */
+.chartcard{margin-top:18px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px 14px}
+.chart-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:6px}
+.chart-head .t{font-size:12px;color:var(--muted)}
+.chart-head .t b{color:var(--muted);font-weight:400;opacity:.7}
+#cont{position:relative}
+#readout{position:absolute;top:34px;left:50%;transform:translateX(-100%);font-size:13px;font-weight:600;font-family:var(--mono);color:var(--accent);pointer-events:none;white-space:nowrap;line-height:1}
+
+/* metrics */
+.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:10px}
+.metric{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 13px 8px}
+.metric .num{font-family:var(--mono);font-size:22px;font-weight:600;letter-spacing:-.03em}
+.metric .lab{font-size:11px;color:var(--muted);margin-top:2px;line-height:1.35}
+.metric svg{display:block;width:100%;height:26px;margin-top:8px;overflow:visible}
+
+/* about */
+.about p{font-size:14px;max-width:680px;color:var(--text);line-height:1.55}
+
+/* experience */
+.xp{position:relative;padding-left:22px;border-left:2px solid var(--border);margin-top:4px}
+.job{position:relative;padding:0 0 20px}
+.job:last-child{padding-bottom:0}
+.job::before{content:"";position:absolute;left:-29px;top:3px;width:9px;height:9px;border-radius:50%;background:var(--accent);border:3px solid var(--bg)}
+.job .role{font-size:14px;font-weight:600;letter-spacing:-.01em}
+.job .co{font-size:12px;color:var(--accent);margin:1px 0 2px}
+.job .when{font-size:11px;color:var(--muted);font-family:var(--mono)}
+.job ul{margin:7px 0 0;padding-left:15px}
+.job li{font-size:12.5px;margin-bottom:4px;color:var(--text);line-height:1.45}
+.earlier{font-size:12px;color:var(--muted);margin-top:6px}
+
+/* projects */
+.filters{display:flex;gap:7px;flex-wrap:wrap;margin:6px 0 18px}
+.filters button{font:inherit;font-size:12px;padding:6px 13px;border-radius:6px;border:1px solid var(--border-2);background:transparent;color:var(--muted);cursor:pointer;transition:.2s}
+.filters button.active{background:var(--accent);border-color:var(--accent);color:#fff}
+.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(288px,1fr));gap:12px}
+.proj{background:var(--surface);border:1px solid var(--border);border-radius:11px;padding:16px;transition:transform .25s,border-color .25s,box-shadow .25s;display:flex;flex-direction:column}
+.proj:hover{transform:translateY(-3px);border-color:var(--accent);box-shadow:0 8px 24px rgba(0,0,0,.06)}
+.proj .pt{font-size:15px;font-weight:600;display:flex;align-items:center;justify-content:space-between;gap:8px;letter-spacing:-.01em}
+.proj .res{font-family:var(--mono);font-size:11px;color:var(--success);white-space:nowrap}
+.proj .pb{font-size:13px;color:var(--muted);margin:8px 0 12px;line-height:1.5}
+.proj .pb b{color:var(--text);font-weight:600}
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:auto}
+.tag{font-size:10.5px;padding:3px 8px;border-radius:5px;background:var(--accent-weak);color:var(--accent);font-weight:500}
+.bridge{font-size:12px;color:var(--muted);border-top:1px solid var(--border);padding-top:9px;margin-top:11px;font-style:italic}
+.hide{display:none!important}
+
+/* supporting + dashboards */
+.mini{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
+.mcard{background:var(--surface-2);border:1px solid var(--border);border-radius:10px;padding:13px 15px}
+.mcard .mt{font-weight:600;font-size:14px}
+.mcard .md{font-size:12px;color:var(--muted);margin-top:2px}
+.dash{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:12px}
+.dcard{background:var(--surface);border:1px solid var(--border);border-radius:11px;overflow:hidden}
+.dprev{height:88px;background:var(--surface-2);border-bottom:1px solid var(--border);position:relative;overflow:hidden}
+.dprev svg{position:absolute;inset:0;width:100%;height:100%}
+.dmeta{padding:11px 14px}
+.dmeta .dt{font-weight:600;font-size:14px}
+.dmeta .dd{font-size:12px;color:var(--muted)}
+
+/* skills */
+.skills{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.sgroup h3{font-size:12px;margin:0 0 9px;color:var(--muted);text-transform:uppercase;letter-spacing:.12em;font-weight:600}
+.chips{display:flex;flex-wrap:wrap;gap:7px}
+.chip{font-size:12px;padding:5px 11px;border-radius:6px;background:var(--surface);border:1px solid var(--border)}
+.certs{margin-top:22px;font-size:12.5px;color:var(--muted);line-height:1.7}
+.certs b{color:var(--text);font-weight:600}
+
+/* contact */
+.contact{text-align:center}
+.contact h2{font-size:26px;text-transform:uppercase;letter-spacing:-.02em}
+.contact .sub{color:var(--muted);max-width:500px;margin:6px auto 20px;font-size:13px}
+.foot{border-top:1px solid var(--border);padding:22px 0;text-align:center;font-size:12px;color:var(--muted)}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap">
+    <div class="brand">Daniel Decena <span class="status"><span class="dot"></span>systems operational</span></div>
+    <div class="navlinks">
+      <a href="#work">Work</a>
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
+      <a class="resume" href="Daniel_Decena_Resume.pdf" download>Résumé</a>
+      <a class="iconbtn" href="https://github.com/danieldecena" target="_blank" rel="noopener" aria-label="GitHub"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.76-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"/></svg></a>
+      <button class="iconbtn" id="themeBtn" aria-label="Toggle theme">☾</button>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="icebreak reveal">// Single Source of Truth — nobody trusts me, everybody quotes me</div>
+    <h1 class="reveal">Marketing Automation<br>&amp; Operations</h1>
+    <p class="lede reveal">I turn messy, manual marketing processes into reliable, automated, revenue-driving systems.</p>
+    <div class="cta reveal">
+      <a class="btn primary" href="mailto:danieldecena@icloud.com">Get in touch</a>
+      <a class="btn" href="https://linkedin.com/in/danieldecena" target="_blank" rel="noopener">LinkedIn</a>
+      <a class="btn" href="Daniel_Decena_Resume.pdf" download>Download résumé</a>
+      <span class="loc">Los Angeles, CA</span>
+    </div>
+
+    <div class="chartcard reveal">
+      <div class="chart-head">
+        <div class="t">Pipeline index <b>· hover or drag to scrub</b></div>
+        <button class="btn" id="toggle" style="padding:8px 14px">Apply my optimizations</button>
+      </div>
+      <div id="cont">
+        <div id="readout">305.00</div>
+        <svg id="chart" viewBox="0 0 680 208" width="100%" style="display:block;touch-action:none">
+          <defs>
+            <linearGradient id="pf" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#7F77DD" stop-opacity=".42"/>
+              <stop offset=".6" stop-color="#7F77DD" stop-opacity=".16"/>
+              <stop offset="1" stop-color="#7F77DD" stop-opacity=".05"/>
+            </linearGradient>
+            <filter id="dsh" x="-60%" y="-60%" width="220%" height="220%">
+              <feDropShadow dx="0" dy="1" stdDeviation="2" flood-color="#000" flood-opacity=".18"/>
+            </filter>
+          </defs>
+          <g id="grid" stroke="var(--border)" stroke-width="1"></g>
+          <path id="ghost" fill="none" stroke="var(--muted)" stroke-width="1.1" stroke-dasharray="2 4" opacity="0"/>
+          <path id="area" fill="url(#pf)" opacity="0"/>
+          <path id="line" fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/>
+          <line id="cross" y1="35" y2="208" stroke="var(--accent)" stroke-width="1" opacity="0"/>
+          <circle id="dot" r="6.5" fill="var(--surface)" stroke="var(--accent)" stroke-width="3" opacity="0" filter="url(#dsh)"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="sec" id="impact">
+  <div class="wrap">
+    <div class="metrics" id="metrics">
+      <div class="metric reveal"><div class="num" data-to="4" data-prefix="$" data-suffix="M+">$0</div><div class="lab">campaign spend &amp; portfolios optimized</div><svg data-spark="1"></svg></div>
+      <div class="metric reveal"><div class="num" data-to="30" data-suffix="%">0%</div><div class="lab">forecasting accuracy lift</div><svg data-spark="1"></svg></div>
+      <div class="metric reveal"><div class="num" data-to="22" data-suffix="%">0%</div><div class="lab">lead-conversion increase</div><svg data-spark="1"></svg></div>
+      <div class="metric reveal"><div class="num" data-to="4" data-suffix="M+">0</div><div class="lab">CRM records cleaned &amp; deduplicated</div><svg data-spark="1"></svg></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec about" id="about">
+  <div class="wrap reveal">
+    <div class="sec-label">About</div>
+    <p>I'm a go-to-market and revenue-operations specialist who builds the infrastructure behind marketing that scales. Across PitchBook, Field Nation, and DoorDash I've overhauled CRMs, automated lifecycle campaigns, and managed multimillion-dollar campaign portfolios — turning fragile, manual workflows into dependable pipelines. I work where marketing meets data and code: Salesforce and Marketo on one side, Python, SQL, and Snowflake on the other.</p>
+  </div>
+</section>
+
+<section class="sec" id="work">
+  <div class="wrap">
+    <div class="sec-label reveal">Experience</div>
+    <div class="xp">
+      <div class="job reveal">
+        <div class="role">Ad Ops Specialist</div>
+        <div class="co">DoorDash · Sage Group — Los Angeles</div>
+        <div class="when">Aug 2025 – May 2026</div>
+        <ul>
+          <li>Owned revenue operations for a $2M+ campaign portfolio across ENT, CPG, and NV verticals, preventing zero-delivery scenarios through proactive optimization.</li>
+          <li>Built an agentic monitoring system on Snowflake data that auto-flags delivery errors, eliminating manual monitoring across $1M+ in active campaigns.</li>
+          <li>Drove $2M+ in spend efficiency by optimizing pacing, bids, and signals to maximize delivery ROI.</li>
+        </ul>
+      </div>
+      <div class="job reveal">
+        <div class="role">Growth Marketing Specialist</div>
+        <div class="co">Field Nation — Seattle</div>
+        <div class="when">Dec 2023 – Jul 2024</div>
+        <ul>
+          <li>Overhauled Salesforce and HubSpot with custom automations, lifting forecasting accuracy 30%.</li>
+          <li>Standardized data across CRM and marketing systems, driving a 22% increase in lead conversion.</li>
+          <li>Automated ZoomInfo enrichment into Outreach and Salesforce for a 20% lift in email deliverability.</li>
+        </ul>
+      </div>
+      <div class="job reveal">
+        <div class="role">Marketing Automation Specialist</div>
+        <div class="co">PitchBook Data — Seattle</div>
+        <div class="when">Aug 2021 – Aug 2023</div>
+        <ul>
+          <li>Redesigned the end-to-end lifecycle funnel (tracking, lead scoring, nurture), boosting lead-tracking accuracy 15%.</li>
+          <li>Built automations in Python, Marketo, and Salesforce, improving operational efficiency 20%.</li>
+          <li>Ran daily campaigns to 60K+ contacts at 98% deliverability; cleaned a 4M+ record Marketo database, cutting storage costs 25%.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="earlier reveal">Earlier: Marketing Specialist, Grange Insurance · Product Marketing Associate, Leafly.</div>
+  </div>
+</section>
+
+<section class="sec" id="projects">
+  <div class="wrap">
+    <div class="sec-label reveal">Featured projects</div>
+    <h2 class="reveal">Systems I've built</h2>
+    <div class="filters reveal" id="filters">
+      <button class="active" data-f="all">All</button>
+      <button data-f="automation">Automation</button>
+      <button data-f="data">Data</button>
+      <button data-f="marketing">Marketing</button>
+    </div>
+    <div class="pgrid" id="pgrid">
+      <article class="proj reveal" data-tags="automation data marketing">
+        <div class="pt">JobScout <span class="res">▲ fully automated</span></div>
+        <div class="pb"><b>Problem:</b> job hunting is a high-volume, manual funnel. <b>Built:</b> scrapes ATS APIs (Greenhouse, Lever, Ashby, Workday), ranks postings with an embedding pre-filter, scores matches with an LLM, syncs status from Gmail, and autofills applications via background Safari.</div>
+        <div class="tags"><span class="tag">Python</span><span class="tag">LLM</span><span class="tag">ATS APIs</span><span class="tag">Gmail</span></div>
+        <div class="bridge">Same architecture as an inbound lead-scoring and nurture engine.</div>
+      </article>
+      <article class="proj reveal" data-tags="automation marketing">
+        <div class="pt">LinkedIn Scan <span class="res">▲ 7 markets, deduped</span></div>
+        <div class="pb"><b>Built:</b> a deep multi-region scraper (7 markets × up to 10 pages) with dedupe/diff against persistent memory, outputting a scored, filterable board that feeds JobScout.</div>
+        <div class="tags"><span class="tag">Scraping</span><span class="tag">Dedup</span><span class="tag">Data hygiene</span></div>
+        <div class="bridge">Automated demand-gen sourcing plus the data hygiene that keeps a CRM trustworthy.</div>
+      </article>
+      <article class="proj reveal" data-tags="automation">
+        <div class="pt">safari-automation <span class="res">▲ 61 tests pass</span></div>
+        <div class="pb"><b>Built:</b> a background-browser automation framework with a Keychain-backed account manager and ATS signup adapters; drove a real LinkedIn Easy Apply end-to-end.</div>
+        <div class="tags"><span class="tag">AppleScript</span><span class="tag">Keychain</span><span class="tag">Testing</span></div>
+        <div class="bridge">Production-grade automation with real QA rigor — not brittle scripts.</div>
+      </article>
+      <article class="proj reveal" data-tags="automation data">
+        <div class="pt">dayagenda <span class="res">▲ multi-source sync</span></div>
+        <div class="pb"><b>Built:</b> a Rust TUI that synthesizes a daily task list from email, iMessage, calendar, and GitHub — with dedup, priority scoring, and provenance.</div>
+        <div class="tags"><span class="tag">Rust</span><span class="tag">Data integration</span><span class="tag">Dedup</span></div>
+        <div class="bridge">The same signal-consolidation and prioritization logic behind lifecycle orchestration.</div>
+      </article>
+      <article class="proj reveal" data-tags="data">
+        <div class="pt">Finance dashboard <span class="res">▲ live analytics</span></div>
+        <div class="pb"><b>Built:</b> a FastAPI + React app with a Plaid data pipeline feeding a live analytics UI and a terminal dashboard.</div>
+        <div class="tags"><span class="tag">FastAPI</span><span class="tag">React</span><span class="tag">Plaid</span></div>
+        <div class="bridge">Turning raw data into the operational dashboards every ops team needs.</div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="dashboards">
+  <div class="wrap">
+    <div class="sec-label reveal">Dashboards</div>
+    <h2 class="reveal">Tools I've shipped</h2>
+    <div class="dash" style="margin-top:20px">
+      <div class="dcard reveal"><div class="dprev" data-mock="a"></div><div class="dmeta"><div class="dt">LinkedIn job board</div><div class="dd">Scored, filterable sourcing view</div></div></div>
+      <div class="dcard reveal"><div class="dprev" data-mock="b"></div><div class="dmeta"><div class="dt">Music studio</div><div class="dd">Stem separation &amp; render toolkit</div></div></div>
+      <div class="dcard reveal"><div class="dprev" data-mock="c"></div><div class="dmeta"><div class="dt">Session playbook</div><div class="dd">Live work + status tracker</div></div></div>
+    </div>
+    <div class="mini" style="margin-top:26px">
+      <div class="mcard reveal"><div class="mt">claude-spinner</div><div class="md">Native macOS menu-bar app · 57 tests</div></div>
+      <div class="mcard reveal"><div class="mt">ownly-app</div><div class="md">Next.js · Stripe merchant checkout SaaS</div></div>
+      <div class="mcard reveal"><div class="mt">96.6 ROM Radio</div><div class="md">Web-radio PWA with pre-rendered shows</div></div>
+      <div class="mcard reveal"><div class="mt">clipper</div><div class="md">Content-pipeline automation &amp; tracking</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="skills">
+  <div class="wrap">
+    <div class="sec-label reveal">Skills &amp; tools</div>
+    <div class="skills" style="margin-top:8px">
+      <div class="sgroup reveal"><h3>GTM stack</h3><div class="chips"><span class="chip">Salesforce</span><span class="chip">HubSpot</span><span class="chip">Marketo</span><span class="chip">Outreach</span><span class="chip">ZoomInfo</span><span class="chip">Drift</span></div></div>
+      <div class="sgroup reveal"><h3>Data &amp; analytics</h3><div class="chips"><span class="chip">Snowflake</span><span class="chip">Sigma</span><span class="chip">Tableau</span><span class="chip">SQL</span><span class="chip">Python</span></div></div>
+      <div class="sgroup reveal"><h3>Ops &amp; automation</h3><div class="chips"><span class="chip">LLM workflows</span><span class="chip">A/B testing</span><span class="chip">Lead-funnel dev</span><span class="chip">HTML/CSS</span></div></div>
+      <div class="sgroup reveal"><h3>Campaign systems</h3><div class="chips"><span class="chip">DoorDash Ads</span><span class="chip">Google Analytics</span><span class="chip">Campaign metrics</span></div></div>
+    </div>
+    <div class="certs reveal"><b>Certifications:</b> Nucamp (SQL &amp; Python) · HubSpot Marketing Hub · DataCamp (Python for Data Science) · Udemy (Python &amp; SQL, HTML5/CSS3). &nbsp;<b>Education:</b> BA Communications, University of Washington.</div>
+  </div>
+</section>
+
+<section class="sec contact" id="contact">
+  <div class="wrap reveal">
+    <div class="sec-label" style="text-align:center">Contact</div>
+    <h2>Let's build something reliable.</h2>
+    <p class="sub">Open to Marketing Automation &amp; Operations / RevOps roles — Los Angeles or remote.</p>
+    <div class="cta" style="justify-content:center">
+      <a class="btn primary" href="mailto:danieldecena@icloud.com">danieldecena@icloud.com</a>
+      <a class="btn" href="https://linkedin.com/in/danieldecena" target="_blank" rel="noopener">LinkedIn</a>
+      <a class="btn" href="https://github.com/danieldecena" target="_blank" rel="noopener">GitHub</a>
+      <a class="btn" href="tel:+12066053050">+1 (206) 605-3050</a>
+    </div>
+  </div>
+</section>
+
+<footer class="foot">© <span id="yr"></span> Daniel Decena · Marketing Automation &amp; Operations</footer>
+
+<script>
+(function(){
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.getElementById('yr').textContent=new Date().getFullYear();
+
+  /* theme */
+  var tb=document.getElementById('themeBtn');
+  tb.addEventListener('click',function(){
+    var d=document.documentElement.getAttribute('data-theme')==='dark';
+    document.documentElement.setAttribute('data-theme',d?'light':'dark');
+    tb.textContent=d?'☾':'☀';
+  });
+
+  /* reveal + triggers */
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); if(e.target.dataset.count) countUp(e.target); io.unobserve(e.target); } });
+  },{threshold:.18});
+  document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+
+  /* count-up */
+  document.querySelectorAll('.metric .num').forEach(function(n){ n.dataset.count='1'; io.observe(n); });
+  function countUp(el){
+    var to=parseFloat(el.dataset.to), pre=el.dataset.prefix||'', suf=el.dataset.suffix||'';
+    if(reduce){ el.textContent=pre+to+suf; return; }
+    var t0=performance.now(),dur=1100;
+    (function s(t){ var p=Math.min(1,(t-t0)/dur),e=1-Math.pow(1-p,3),v=to<10?(to*e).toFixed(0):Math.round(to*e); el.textContent=pre+v+suf; if(p<1)requestAnimationFrame(s); })(performance.now());
+  }
+
+  /* sparklines on metric cards */
+  function mb(a){return function(){a|=0;a=a+0x6D2B79F5|0;var t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+  document.querySelectorAll('svg[data-spark]').forEach(function(svg,si){
+    var r=mb(si*97+13),W=200,Hh=34,N=24,v=8,pts=[];
+    for(var i=0;i<N;i++){ v+=(-0.2)+(r())*1.2; pts.push(v); }
+    var lo=Math.min.apply(null,pts),hi=Math.max.apply(null,pts);
+    var d=pts.map(function(p,i){var x=(W)*(i/(N-1)),y=4+(Hh-8)*(1-(p-lo)/(hi-lo||1));return (i?'L':'M')+x.toFixed(1)+' '+y.toFixed(1);}).join(' ');
+    svg.setAttribute('viewBox','0 0 '+W+' '+Hh);
+    var pa=document.createElementNS('http://www.w3.org/2000/svg','path');
+    pa.setAttribute('d',d);pa.setAttribute('fill','none');pa.setAttribute('stroke','var(--accent)');pa.setAttribute('stroke-width','2');pa.setAttribute('stroke-linecap','round');pa.setAttribute('stroke-linejoin','round');
+    svg.appendChild(pa);
+    var len=pa.getTotalLength();
+    if(!reduce){ pa.style.strokeDasharray=len;pa.style.strokeDashoffset=len;
+      var o=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){pa.style.transition='stroke-dashoffset 1s ease';pa.style.strokeDashoffset='0';o.unobserve(svg);}});},{threshold:.4});
+      o.observe(svg);
+    }
+  });
+
+  /* dashboard mock previews */
+  document.querySelectorAll('.dprev').forEach(function(el,di){
+    var r=mb(di*31+5),W=280,Hh=120,N=30,v=10,pts=[];
+    for(var i=0;i<N;i++){ v+=(-0.3)+(r())*1.3; pts.push(v); }
+    var lo=Math.min.apply(null,pts),hi=Math.max.apply(null,pts);
+    var line=pts.map(function(p,i){var x=W*(i/(N-1)),y=14+(Hh-28)*(1-(p-lo)/(hi-lo||1));return (i?'L':'M')+x.toFixed(1)+' '+y.toFixed(1);}).join(' ');
+    var fill=line+'L'+W+' '+Hh+' L0 '+Hh+' Z';
+    el.innerHTML='<svg viewBox="0 0 '+W+' '+Hh+'" preserveAspectRatio="none"><path d="'+fill+'" fill="var(--accent-weak)"/><path d="'+line+'" fill="none" stroke="var(--accent)" stroke-width="2"/></svg>';
+  });
+
+  /* project filter */
+  var filters=document.getElementById('filters');
+  filters.addEventListener('click',function(e){
+    var b=e.target.closest('button'); if(!b)return;
+    filters.querySelectorAll('button').forEach(function(x){x.classList.remove('active');});
+    b.classList.add('active');
+    var f=b.dataset.f;
+    document.querySelectorAll('#pgrid .proj').forEach(function(c){
+      c.classList.toggle('hide', f!=='all' && c.dataset.tags.indexOf(f)<0);
+    });
+  });
+
+  /* ===== hero ticker chart ===== */
+  var W=680,H=208,padX=4,botP=10,n=120,rows=6,rowH=H/rows,usableTop=rowH+6,usableBot=H-botP;
+  var rA=mb(11),rB=mb(29),before=[],after=[],p=302,q=300;
+  for(var i=0;i<n;i++){ p+=-0.002+(rA()-0.5)*1.7; if(p<296)p=296; if(p>308)p=308; before.push(p); }
+  for(var k=0;k<n;k++){ var f=k/n,d=f<0.5?0.05:(f<0.57?1.2:0.26); q+=d+(rB()-0.5)*2.2; after.push(q); }
+  var all=before.concat(after),lo=Math.min.apply(null,all)-3,hi=Math.max.apply(null,all)+3;
+  function X(i){return padX+(W-2*padX)*(i/(n-1));}
+  function Y(v){return usableTop+(usableBot-usableTop)*(1-(v-lo)/(hi-lo));}
+  function pathOf(a){var s='';for(var i=0;i<a.length;i++)s+=(i?'L':'M')+X(i).toFixed(1)+' '+Y(a[i]).toFixed(1)+' ';return s;}
+  function areaOf(a){return pathOf(a)+'L'+X(n-1).toFixed(1)+' '+(H-2)+' L'+X(0).toFixed(1)+' '+(H-2)+' Z';}
+  var grid=document.getElementById('grid');
+  for(var gx=1;gx<7;gx++){var x=padX+(W-2*padX)*gx/7;grid.insertAdjacentHTML('beforeend','<line x1="'+x+'" y1="'+rowH+'" x2="'+x+'" y2="'+H+'"/>');}
+  for(var gy=1;gy<=rows;gy++){var yy=Math.min(H-0.5,rowH*gy);grid.insertAdjacentHTML('beforeend','<line x1="0" y1="'+yy+'" x2="'+W+'" y2="'+yy+'"/>');}
+  var lineEl=document.getElementById('line'),areaEl=document.getElementById('area'),ghostEl=document.getElementById('ghost'),cross=document.getElementById('cross'),dot=document.getElementById('dot'),readout=document.getElementById('readout'),svg=document.getElementById('chart'),btn=document.getElementById('toggle');
+  var on=false,cur=before,idx=Math.round(n*0.55);
+  function drawLine(a){
+    lineEl.setAttribute('d',pathOf(a));areaEl.setAttribute('d',areaOf(a));
+    var len=lineEl.getTotalLength();
+    if(reduce){areaEl.style.opacity='1';return;}
+    lineEl.style.transition='none';lineEl.style.strokeDasharray=len;lineEl.style.strokeDashoffset=len;areaEl.style.opacity='0';
+    lineEl.getBoundingClientRect();
+    lineEl.style.transition='stroke-dashoffset 1.2s cubic-bezier(.4,0,.2,1)';areaEl.style.transition='opacity 1s ease';
+    lineEl.style.strokeDashoffset='0';areaEl.style.opacity='1';
+  }
+  function place(i){
+    idx=Math.max(0,Math.min(n-1,i));
+    var xv=X(idx),yv=Y(cur[idx]);
+    cross.setAttribute('x1',xv);cross.setAttribute('x2',xv);cross.style.opacity='0.8';
+    dot.setAttribute('cx',xv);dot.setAttribute('cy',yv);dot.style.opacity='1';
+    readout.textContent=cur[idx].toFixed(2);
+    var rect=svg.getBoundingClientRect(),px=(xv/W)*rect.width,topLineY=(rowH/H)*rect.height;
+    readout.style.top=(topLineY-17)+'px';
+    var estW=readout.offsetWidth||46;
+    if(px-estW-8<4){readout.style.transform='translateX(8px)';readout.style.left=px+'px';}
+    else{readout.style.transform='translateX(-100%)';readout.style.left=(px-8)+'px';}
+  }
+  function fromEvent(e){var rect=svg.getBoundingClientRect();place(Math.round(((e.clientX-rect.left)/rect.width)*(n-1)));}
+  svg.addEventListener('pointermove',fromEvent);svg.addEventListener('pointerdown',fromEvent);
+  drawLine(before);place(idx);
+  window.addEventListener('resize',function(){place(idx);});
+  btn.addEventListener('click',function(){
+    on=!on;cur=on?after:before;btn.textContent=on?'Reset to current':'Apply my optimizations';
+    if(on){ghostEl.setAttribute('d',pathOf(before));ghostEl.style.transition='opacity .5s';ghostEl.style.opacity='0.7';}
+    else{ghostEl.style.opacity='0';}
+    drawLine(cur);place(idx);
+  });
+})();
+</script>
+</body>
+</html>
