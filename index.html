@@ -55,6 +55,11 @@ h2{font-size:15px;margin:0 0 3px}
 @media(max-width:720px){.navlinks a:not(.resume){display:none}}
 
 /* hero */
+/* The title row: nowrap plus flex:1 made the h1 overflow its own box and run
+   under the buttons instead of wrapping, because a nowrap flex item never lets
+   the row wrap. It wraps now, and stacks outright on a phone. */
+.herorow{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+@media(max-width:600px){.herorow{flex-direction:column;align-items:flex-start;gap:10px}}
 .hero{padding:20px 0 12px}
 .icebreak{font-family:var(--mono);font-size:10px;color:var(--accent);margin-bottom:7px;letter-spacing:0}
 .hero h1{font-size:clamp(18px,2.8vw,26px);margin:0 0 7px;text-transform:uppercase;letter-spacing:-.02em}
@@ -200,8 +205,8 @@ h2{font-size:15px;margin:0 0 3px}
 
 <header class="hero">
   <div class="wrap">
-    <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap">
-      <h1 class="reveal" style="border-radius:15px;font-size:15px;margin:0;flex:1;min-width:0;white-space:nowrap">MARKETING AUTOMATION &amp; OPERATIONS</h1>
+    <div class="herorow">
+      <h1 class="reveal" style="font-size:15px;margin:0;flex:1 1 16rem;min-width:0">MARKETING AUTOMATION &amp; OPERATIONS</h1>
       <div class="cta reveal" style="flex:none">
         <a class="btn" href="https://linkedin.com/in/danieldecena" target="_blank" rel="noopener" style="width:82px;height:17px">LinkedIn</a>
         <a class="btn primary" href="mailto:danieldecena@icloud.com" style="width:64px;height:16px">Email</a>
