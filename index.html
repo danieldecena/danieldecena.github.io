@@ -22,7 +22,7 @@
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{margin:0;background:var(--bg);color:var(--text);font-family:var(--mono);font-size:12px;line-height:1.45;letter-spacing:-.01em;-webkit-font-smoothing:antialiased}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);font-size:13px;line-height:1.5;letter-spacing:-.01em;-webkit-font-smoothing:antialiased}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 a{color:inherit;text-decoration:none}
 .wrap{max-width:860px;margin:0 auto;padding:0 18px}
@@ -32,8 +32,14 @@ h2{font-size:15px;margin:0 0 3px}
 .sec-label{font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:7px}
 .sec-label::before{content:"› "}
 .mono{font-family:var(--mono)}
-.reveal{opacity:0;transform:translateY(18px);transition:opacity .7s cubic-bezier(.4,0,.2,1),transform .7s cubic-bezier(.4,0,.2,1)}
-.reveal.in{opacity:1;transform:none}
+/* Mono is the label voice, not the prose voice: section labels, tags, project
+   identifiers and figures. Prose reads in sans. */
+.sec-label,.tag,.pt,.dt,.mt,.res,.how-h,.chart-stats span,.xspan,.legend,.certs b,.icebreak{font-family:var(--mono)}
+.pt a{color:inherit;border-bottom:1px solid var(--border-2);transition:.2s}
+.pt a:hover{color:var(--accent);border-bottom-color:var(--accent)}
+.reveal{opacity:0;transform:translateY(18px);animation:revealsafety 0s 1.8s forwards;transition:opacity .7s cubic-bezier(.4,0,.2,1),transform .7s cubic-bezier(.4,0,.2,1)}
+.reveal.in{opacity:1;transform:none;animation:none}
+@keyframes revealsafety{to{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
 
 /* nav */
@@ -316,6 +322,12 @@ h2{font-size:15px;margin:0 0 3px}
       <button data-f="marketing">Marketing</button>
     </div>
     <div class="pgrid" id="pgrid">
+      <article class="proj reveal" data-tags="automation data">
+        <div class="pt"><a href="/wa-fish-map/">WA Fish Map</a> <span class="res">▲ in App Store review</span></div>
+        <div class="pb"><b>Problem:</b> Washington's fishing access, season timing and conditions live across WDFW pages, NOAA tide tables and buoy feeds — none of them usable at a boat ramp. <b>Built:</b> a native iPhone app mapping 477 WDFW access sites with live weather, tides for the nearest of 170 NOAA stations, buoy readings and a seasonal rating model; taken through Developer Program enrolment, TestFlight and App Store submission.</div>
+        <div class="tags"><span class="tag">Swift</span><span class="tag">SwiftUI</span><span class="tag">MapKit</span><span class="tag">WeatherKit</span><span class="tag">152 tests</span></div>
+        <div class="bridge">The only project here that went through Apple's full release pipeline — the one App Store advertisers live in.</div>
+      </article>
       <article class="proj reveal" data-tags="automation data marketing">
         <div class="pt">JobScout <span class="res">▲ fully automated</span></div>
         <div class="pb"><b>Problem:</b> job hunting is a high-volume, manual funnel. <b>Built:</b> scrapes ATS APIs (Greenhouse, Lever, Ashby, Workday), ranks postings with an embedding pre-filter, scores matches with an LLM, syncs status from Gmail, and autofills applications via background Safari.</div>
@@ -354,11 +366,6 @@ h2{font-size:15px;margin:0 0 3px}
   <div class="wrap">
     <div class="sec-label reveal">Dashboards</div>
     <h2 class="reveal">Tools I've shipped</h2>
-    <div class="dash" style="margin-top:20px">
-      <div class="dcard reveal"><div class="dprev"><image-slot id="dprev-a" shape="rect" placeholder="Drop a screenshot" style="width:100%;height:100%"></image-slot></div><div class="dmeta"><div class="dt">LinkedIn job board</div><div class="dd">Scored, filterable sourcing view</div></div></div>
-      <div class="dcard reveal"><div class="dprev"><image-slot id="dprev-b" shape="rect" placeholder="Drop a screenshot" style="width:100%;height:100%"></image-slot></div><div class="dmeta"><div class="dt">Music studio</div><div class="dd">Stem separation &amp; render toolkit</div></div></div>
-      <div class="dcard reveal"><div class="dprev"><image-slot id="dprev-c" shape="rect" placeholder="Drop a screenshot" style="width:100%;height:100%"></image-slot></div><div class="dmeta"><div class="dt">Session playbook</div><div class="dd">Live work + status tracker</div></div></div>
-    </div>
     <div class="mini" style="margin-top:26px">
       <div class="mcard reveal"><div class="mt">claude-spinner</div><div class="md">Native macOS menu-bar app · 57 tests</div></div>
       <div class="mcard reveal"><div class="mt">ownly-app</div><div class="md">Next.js · Stripe merchant checkout SaaS</div></div>
@@ -377,7 +384,7 @@ h2{font-size:15px;margin:0 0 3px}
       <div class="sgroup reveal"><h3>Ops &amp; automation</h3><div class="chips"><span class="chip">LLM workflows</span><span class="chip">A/B testing</span><span class="chip">Lead-funnel dev</span><span class="chip">HTML/CSS</span></div></div>
       <div class="sgroup reveal"><h3>Campaign systems</h3><div class="chips"><span class="chip">DoorDash Ads</span><span class="chip">Google Analytics</span><span class="chip">Campaign metrics</span></div></div>
     </div>
-    <div class="certs reveal"><b>Certifications:</b> Nucamp (SQL &amp; Python) · HubSpot Marketing Hub · DataCamp (Python for Data Science) · Udemy (Python &amp; SQL, HTML5/CSS3). &nbsp;<b>Education:</b> BA Communications, University of Washington.</div>
+    <div class="certs reveal"><b>Certifications:</b> Nucamp (SQL &amp; Python) · HubSpot Marketing Hub · DataCamp (Python for Data Science). &nbsp;<b>Education:</b> BA Communications, University of Washington.</div>
   </div>
 </section>
 
